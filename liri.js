@@ -70,6 +70,10 @@ function concertThis(artist) {
 }
 
 function spotifyThis(track) {
+  // if user input is blank then default to this
+  if (track == ""){
+    track = "the sign ace of base";
+  }
   spotify.search({ type: 'track', query: track }, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
@@ -81,11 +85,13 @@ function spotifyThis(track) {
     Preview Link: ${data.tracks.items[0].href}
     Album Title:  ${data.tracks.items[0].album.name}
     =====================`);
-    console.log(data.tracks); 
   });
 }
 
 function movieThis(movieName) {
+  if (movieName == ""){
+    movieName = "Mr. Nobody";
+  }
   // Then run a request with axios to the OMDB API with the movie specified
 var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 

@@ -13,26 +13,18 @@ const userInput = process.argv.slice(3).join(" ");
 function goLiri(command, userIn){
   switch (command) {
     case "concert-this":
-      console.log("inside concert-this");
       concertThis(userIn);
       break;
     case "spotify-this-song":
-      console.log("inside spotify-this-song");
       spotifyThis(userIn);
       break;
     case "movie-this":
-      console.log("inside movie-this");
       movieThis(userIn);
       break;
     case "do-what-it-says":
-      console.log("inside do-what-it-says");
       fs.readFile("random.txt", "utf8", function(error, data) {
-        console.log(data);
         const dataArr = data.split(",");
-        goLiri(dataArr[0], dataArr[1].replace('"','').replace('"',''));
-        console.log(dataArr);
-        console.log("readFile data: ", dataArr[1].replace('"','').replace('"',''));
-        // spotifyThis(dataArr[1]);
+        goLiri(dataArr[0], dataArr[1].replace(/['"]+/g, ''));
       });
       break;
   }
@@ -50,7 +42,7 @@ function concertThis(artist) {
       console.log(`***** concert-this results for: ${artist} *****`);
       for (let i = 0; i < response.data.length; i++) {
         console.log(`
-      =====================
+      ===================================================================================
       Venue Name: ${response.data[i].venue.name}
       Location:   ${response.data[i].venue.city}, ${
           response.data[i].venue.region
@@ -58,16 +50,16 @@ function concertThis(artist) {
       Date:       ${moment(response.data[i].venue.datetime).format(
         "MM/DD/YYYY"
       )}
-      =====================`);
+      ===================================================================================`);
       }
     })
     .catch(function(error) {
       if (error) {
         console.log(`
-        =====================
+        ===================================================================================
         Sorry I could not find that.
         Error message: ${error}
-        =====================`);
+        ===================================================================================`);
       }
     });
 }
@@ -80,18 +72,18 @@ function spotifyThis(track) {
   spotify.search({ type: "track", query: track }, function(err, data) {
     if (err) {
       return console.log(`
-      =====================
+      ===================================================================================
       Sorry I could not find that.
       Error message: ${err}
-      =====================`);
+      ===================================================================================`);
     }
     console.log(`
-    =====================
+    ===================================================================================
     Artist:       ${data.tracks.items[0].artists[0].name}
     Song Name:    ${data.tracks.items[0].name}
     Preview Link: ${data.tracks.items[0].href}
     Album Title:  ${data.tracks.items[0].album.name}
-    =====================`);
+    ===================================================================================`);
   });
 }
 
@@ -103,14 +95,11 @@ function movieThis(movieName) {
   var queryUrl =
     "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 
-  // This line is just to help us debug against the actual URL.
-  console.log(queryUrl);
-
   axios
     .get(queryUrl)
     .then(function(response) {
       console.log(`
-      =====================
+      ===================================================================================
       Film Title:   ${response.data.Title}
       Year:         ${response.data.Year}
       IMDB Rating:  ${response.data.Ratings[0].Value}
@@ -119,15 +108,15 @@ function movieThis(movieName) {
       Language:     ${response.data.Language}
       Plot:         ${response.data.Plot}
       Actors:       ${response.data.Actors}
-      =====================`);
+      ===================================================================================`);
     })
     .catch(function(error) {
       if (error) {
         console.log(`
-      =====================
+      ===================================================================================
       Sorry I could not find that.
       Error message: ${error}
-      =====================`);
+      ===================================================================================`);
       }
     });
 }

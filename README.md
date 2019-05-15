@@ -21,7 +21,8 @@ liri.js can take in one of the following commands:
 
      * Date of the Event (use moment to format this as "MM/DD/YYYY")
 
-`spotify-this-song` will show the following information about the song in your terminal/bash window:
+`spotify-this-song` will search the Spotify API for an artist and render the following information about the song in your terminal/bash window:
+    
     * Artist(s)
 
     * The song's name
@@ -32,7 +33,8 @@ liri.js can take in one of the following commands:
 
     * If no song is provided then your program will default to "The Sign" by Ace of Base.
 
-`movie-this` will output the following information to your terminal/bash window:
+`movie-this` will search the OMDB API for an movie and render following information to your terminal/bash window:
+    
     * Title of the movie.
 
     * Year the movie came out.
@@ -46,7 +48,7 @@ liri.js can take in one of the following commands:
     * Language of the movie.
 
     * Plot of the movie.
-    
+
     * Actors in the movie.
     
 `do-what-it-says` will take the text inside of random.txt and then use it to call one of LIRI's commands. It should run spotify-this-song for "Gravel Pit" as follows the text in random.txt. Feel free to change the text in that document to test out the feature for other commands.
